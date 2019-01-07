@@ -3,6 +3,8 @@ import {View , FlatList , Platform , TouchableHighlight , TouchableNativeFeedbac
         TouchableOpacity , StatusBar , ActivityIndicator , Image , Share}  from 'react-native'
 import apiCalls from './APICalls'
 import utils from './Utils'
+import commonStyles from './common/CommonStyles'
+import color from './common/color'
 var scrwidth=Dimensions.get('window').width
 var scrheight=Dimensions.get('window').height
 const cardHeight = scrheight*.15;
@@ -62,18 +64,31 @@ export default class VideoScreen extends Component {
 
     commonView=(item)=>{
       return(
-        <View style={{backgroundColor:'grey',
+        <View style={{
                         flex: 1,
-                        height: cardHeight,
+                        height: cardHeight*3,
                         width:'90%',
                         alignSelf:'center',
-                        flexDirection: 'row',
+                        flexDirection: 'column',
                         borderRadius: 8,
-                        paddingVertical: cardHeight*.05,
-                        paddingLeft: cardHeight*.1,
-                        paddingRight:cardHeight*.1,
-                        marginVertical: cardHeight*.05}} pointerEvents='box-only'>
-                <Image style = {{flex:1}} source={{uri : item.item.thumbnail_url}}/>
+                        marginVertical: cardHeight*.05 , 
+                        }} pointerEvents='box-only'>
+            <View style={{backgroundColor:'#add8e6' , position:'absolute' , height:cardHeight*2 ,width:'100%' ,bottom:0 , borderRadius:12}}>
+                        <Text style={{position:'absolute' , bottom : cardHeight*0.15 , alignSelf:'center' , fontSize : 20}}> {item.item.title} </Text>
+            </View>  
+
+            <View style={{height: cardHeight*2.5,
+                        width:'90%',
+                        alignSelf:'center',
+                        flexDirection: 'column',
+                        borderRadius: 8,
+                        position:'absolute',
+                        top :0,
+                        borderRadius : 12 , 
+                        marginVertical: cardHeight*.05 , }}> 
+                  <Image style = {{flex:1 , borderRadius : 12 }} source={{uri : item.item.thumbnail_url}}/>
+            </View>
+                
         </View>
       )
     }
@@ -81,9 +96,7 @@ export default class VideoScreen extends Component {
     getItem=(item)=>{
         Share.share(
             {
-                title : item.item.title,
                 message : item.item.video_url,
-                // url : item.item.video_url
             }
         )
     }
@@ -95,42 +108,38 @@ export default class VideoScreen extends Component {
         // utils.forceLogout(mThis)
     }
 
-  render() {
-    return (
-      <View style={{backgroundColor:'red' , flex:1}}>
-            <StatusBar
-                backgroundColor='red'
-            />
-            <TouchableOpacity style={{height: 56,
-                                        alignSelf: "center",
-                                        width: "70%",
-                                        margin:'2%',
-                                        backgroundColor:'#c21c4a',
-                                        borderRadius:28,
-                                        justifyContent:'center',
-                                        alignItems:'center',}}onPress={this.openProfile} >
-                    <Text style={{textAlign: 'center',
-                                    textAlignVertical: 'center',
-                                    fontSize:17,
-                                    color:'#FFFFFF',
-                                    fontWeight:"bold",}}>Go To Profile</Text>
-                </TouchableOpacity> 
-            {this.state.isLoading && 
-                <ActivityIndicator size="large"
-                    style={{alignSelf:'center' , flex:1}}
-                />                
-            }    
-            <FlatList
-                extraData={this.state}
-                style={{}}
-                data={this.state.videoDatas}
-                renderItem={this.renderItem}
-                keyExtractor = {(item, index) => index.toString()}
-                onEndReached={this.handleMoreData}
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh}
-            />   
-      </View>
-    )
-  }
+    render() {
+        return (
+        <View style={commonStyles.container}>
+                <StatusBar
+                    backgroundColor={color.primaryColor}
+                />
+                <TouchableOpacity style={{height: 56,
+                                            alignSelf: "center",
+                                            width: "70%",
+                                            margin:'2%',
+                                            backgroundColor:'#a11c4a',
+                                            borderRadius:28,
+                                            justifyContent:'center',
+                                            alignItems:'center',}}onPress={this.openProfile} >
+                        <Text style={commonStyles.buttonText}>Go To Profile</Text>
+                    </TouchableOpacity> 
+                {this.state.isLoading && 
+                    <ActivityIndicator size="large"
+                        style={{alignSelf:'center' , flex:1}}
+                    />                
+                }    
+                <FlatList
+                    extraData={this.state}
+                    style={{}}
+                    data={this.state.videoDatas}
+                    renderItem={this.renderItem}
+                    keyExtractor = {(item, index) => index.toString()}
+                    onEndReached={this.handleMoreData}
+                    refreshing={this.state.refreshing}
+                    onRefresh={this._onRefresh}
+                />   
+        </View>
+        )
+    }
 }

@@ -3,6 +3,8 @@ import {View , StatusBar , Text , Dimensions , Image , TextInput , TouchableOpac
 import testAsyncStorage from './TestAsyncStorage'
 import utils from './Utils';
 import ImagePicker  from 'react-native-image-picker'
+import commonStyles from './common/CommonStyles'
+import color from './common/color'
 var scrwidth=Dimensions.get('window').width
 var scrheight=Dimensions.get('window').height
 var selectedImagePath = ""
@@ -67,21 +69,21 @@ export default class SignUp extends Component {
 
   render() {
     return (
-        <View style={{backgroundColor:'red' , flex:1}}>
+        <View style={commonStyles.container}>
              <StatusBar 
-                backgroundColor = 'red'
+                backgroundColor = {color.primaryColor}
             />
 
             <View>
                 <TouchableOpacity onPress={()=>this.openImagePicker()}>
                 {this.state.imageSource == "" ? (
-                    <Image style = {{alignSelf:'center',margin:'10%'}} source={require('../res/Image/user.png')}/>
+                    <Image style = {commonStyles.primaryImageView} source={require('../res/Image/user.png')}/>
                 ) :
-                (   <Image style = {{alignSelf:'center',margin:'10%' , height:100,width:100}} source={{uri : selectedImagePath}}/>
+                (   <Image style = {{alignSelf:'center',margin:'10%' , height:120,width:120 , borderRadius : 60}} source={{uri : selectedImagePath}}/>
                 )
                 }
                 </TouchableOpacity>
-                <TextInput style = {{width:'80%',alignSelf:'center'}}
+                <TextInput style = {commonStyles.primaryTextInput}
                    label="Registered mobile number"
                    underlineColorAndroid='pink'
                    fontSize={17}
@@ -90,7 +92,7 @@ export default class SignUp extends Component {
                    autoCapitalize = "none"
                    onChangeText = {(text)=> this.setState({name:text})}
                    />
-                   <TextInput style = {{width:'80%',alignSelf:'center'}}
+                   <TextInput style = {commonStyles.primaryTextInput}
                    label="Registered mobile number"
                    underlineColorAndroid='pink'
                    fontSize={17}
@@ -99,7 +101,7 @@ export default class SignUp extends Component {
                    autoCapitalize = "none"
                    onChangeText = {(text)=> this.setState({email:text})}
                    />
-                   <TextInput style = {{width:'80%',alignSelf:'center'}}
+                   <TextInput style = {commonStyles.primaryTextInput}
                    label="Registered mobile number"
                    underlineColorAndroid='pink'
                    fontSize={17}
@@ -109,18 +111,8 @@ export default class SignUp extends Component {
                    secureTextEntry={true}
                    onChangeText = {(text)=> this.setState({password:text})}
                    />
-                   <TouchableOpacity style={{height: 56,
-                                        alignSelf: "center",
-                                        width: "70%",
-                                        backgroundColor:'#c21c4a',
-                                        borderRadius:28,
-                                        justifyContent:'center',
-                                        alignItems:'center',}}onPress={this.registerUser} >
-                    <Text style={{textAlign: 'center',
-                                    textAlignVertical: 'center',
-                                    fontSize:17,
-                                    color:'#FFFFFF',
-                                    fontWeight:"bold",}}>Register</Text>
+                   <TouchableOpacity style={commonStyles.primaryButton}onPress={this.registerUser} >
+                    <Text style={commonStyles.buttonText}>Register</Text>
                    </TouchableOpacity>
             </View>
             <View style={{position:'absolute',bottom:0 ,height:scrheight*.08 , width:'100%' , backgroundColor :'rgba(52 , 52 , 52 , 0.2)' , justifyContent:'center'}}>

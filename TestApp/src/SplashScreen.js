@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import {View , StatusBar} from 'react-native'
+import {View , StatusBar , Image ,Text} from 'react-native'
 import testAsyncStorage from './TestAsyncStorage'
 import utils from './Utils'
 import {StackActions} from 'react-navigation'
+import commonStyles from './common/CommonStyles'
+import color from './common/color'
 export default class SplashScreen extends Component {
 
   constructor(props){
@@ -24,10 +26,14 @@ export default class SplashScreen extends Component {
 
   render() {
     return (
-      <View style={{backgroundColor:'red' , flex:1}}>
+      <View style={[commonStyles.container,{justifyContent:'center'}]}>
             <StatusBar
-                backgroundColor='red'
+                backgroundColor= {color.primaryColor}
             />
+            <View style={{alignSelf:'center'}}>
+            <Image style = {{}} source={require('../res/Image/alert.png')}/>
+            <Text style = {{fontSize:40,color:'white',alignSelf:'center'}}> instan</Text>
+            </View>
       </View>
     )
   }
